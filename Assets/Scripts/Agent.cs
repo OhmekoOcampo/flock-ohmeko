@@ -25,7 +25,7 @@ public class Agent : MonoBehaviour {
 	void Update () { //Will update the movement of the boids.
 
         //Newtonian Physics. Integration.
-        acceleration = 10 * alignment();
+        acceleration = combine();
         acceleration = Vector3.ClampMagnitude(acceleration, conf.maxAcceleration); //makes sure the boids don't accelerate to fast
 
         velocity = velocity + acceleration * Time.deltaTime;
@@ -107,7 +107,11 @@ public class Agent : MonoBehaviour {
 
     Vector3 combine()
     {
-        return Vector3.zero;
+        //Now we need to combine all the resulting vectors from each function.
+        //The finalVec = WeightC*cohesion() + WeightS*separation() + WeightA*alignment()
+
+        Vector3 finalVec = conf.WeightC * cohesion() + conf.WeightS * separation() + conf.WeightA * alignment();
+        return finalVec;
     }
 
 }
