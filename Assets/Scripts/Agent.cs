@@ -9,21 +9,26 @@ public class Agent : MonoBehaviour {
     public Vector3 acceleration; //acceleration vector
 
     public World world;
-    public AgentConfig
+    public AgentConfig conf;
 
 	// Use this for initialization
 	void Start () {
 
         world = FindObjectOfType<World>();
+        conf = FindObjectOfType<AgentConfig>();
         position = transform.position;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update () { //Will update the movement of the boids.
+        
         //Newtonian Physics. Integration.
         acceleration = combine();
+        acceleration = Vector3.ClampMagnitude(acceleration, conf.maxA); //makes sure the boids don't accelerate to fast
+
         velocity = velocity + acceleration * Time.deltaTime;
+        velocity = Vector3.ClampMagnitude(velocity, conf.maxV); //makes sure the boids don't go to fast
+
         position = position + velocity * Time.deltaTime;
 
         transform.position = position;

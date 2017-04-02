@@ -12,4 +12,6 @@ public class AgentConfig : MonoBehaviour
     public float Ks;
     public float Ka;
 
+    public float maxV; //maximum velocity
+    public float maxA; //maximum acceleration
 }
