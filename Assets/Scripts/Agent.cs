@@ -86,7 +86,21 @@ public class Agent : MonoBehaviour {
 
     Vector3 alignment()
     {
-        return Vector3.zero;
+        Vector3 resultVecAlignment = new Vector3();
+
+        var boidFriends = world.getBoidFriends(this, conf.RadiusAlignment);
+
+        if(boidFriends.Count == 0)
+        {
+            return resultVecAlignment;
+        }
+
+        //(this) boid will mimic the speed and direction of it's boid friends.
+        foreach(var agent in boidFriends)
+        {
+            resultVecAlignment = resultVecAlignment + agent.velocity;
+        }
+        return velocity.normalized;
     }
 
     Vector3 combine()
