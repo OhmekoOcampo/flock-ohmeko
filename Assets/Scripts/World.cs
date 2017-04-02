@@ -8,7 +8,11 @@ public class World : MonoBehaviour
     public Transform cubeBoid;
     public int numCubeBoid;
 
-    public List<Agent> agents;
+    public List<Agent> agents; //list for any agent cube boid, sphere boids, etc...
+
+    public float bound; //bound for the world
+
+    public float spawnRadiusAgent;
 
     // Use this for initialization
     void Start()
@@ -30,7 +34,7 @@ public class World : MonoBehaviour
     {
         for(int i = 0; i < n; i++)
         {
-            var obj = Instantiate(prefab, new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)),Quaternion.identity);
+            var obj = Instantiate(prefab, new Vector3(Random.Range(-spawnRadiusAgent, spawnRadiusAgent), 0, Random.Range(-spawnRadiusAgent, spawnRadiusAgent)),Quaternion.identity);
             //instantiate a bunch of cubeboid bird objects
         }
     }

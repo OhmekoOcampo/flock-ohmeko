@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour {
 
-    public Vector3 position; //position
+    public Vector3 position; //position vector
     public Vector3 velocity; //velocity vector
     public Vector3 acceleration; //acceleration vector
 
@@ -32,6 +32,8 @@ public class Agent : MonoBehaviour {
         velocity = Vector3.ClampMagnitude(velocity, conf.maxVelocity); //makes sure the boids don't go to fast
 
         position = position + velocity * Time.deltaTime;
+
+        boidWorldBoundaries(ref position, -world.bound, world.bound);
 
         transform.position = position;
 	}
@@ -114,4 +116,32 @@ public class Agent : MonoBehaviour {
         return finalVec;
     }
 
+    void boidWorldBoundaries(ref Vector3 boundaryVector, float min, float max)
+    {
+        if(boundaryVector.x > max) //bounds x, so that boids wrap around.
+        {
+            boundaryVector.x = min;
+        }else if(boundaryVector.x < min)
+        {
+            boundaryVector.x = max;
+        }
+
+        if (boundaryVector.y > max) //bounds y, so that boids wrap around.
+        {
+            boundaryVector.y = min;
+        }
+        else if (boundaryVector.y < min)
+        {
+            boundaryVector.y = max;
+        }
+
+        if (boundaryVector.z > max) //bounds z, so that boids wrap around.
+        {
+            boundaryVector.z = min;
+        }
+        else if (boundaryVector.z < min)
+        {
+            boundaryVector.z = max;
+        }
+    }
 }
