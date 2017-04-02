@@ -8,10 +8,10 @@ public class AgentConfig : MonoBehaviour
     public float RadiusSeperation;
     public float RadiusAlignment;
 
-    public float Kc;
-    public float Ks;
-    public float Ka;
+    public float WeightC;
+    public float WeightS;
+    public float WeightA;
 
-    public float maxV; //maximum velocity
-    public float maxA; //maximum acceleration
+    public float maxVelocity; //maximum velocity
+    public float maxAcceleration; //maximum acceleration
 }

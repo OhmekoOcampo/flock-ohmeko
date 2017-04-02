@@ -21,13 +21,13 @@ public class Agent : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () { //Will update the movement of the boids.
-        
+
         //Newtonian Physics. Integration.
-        acceleration = combine();
-        acceleration = Vector3.ClampMagnitude(acceleration, conf.maxA); //makes sure the boids don't accelerate to fast
+        acceleration = cohesion();
+        acceleration = Vector3.ClampMagnitude(acceleration, conf.maxAcceleration); //makes sure the boids don't accelerate to fast
 
         velocity = velocity + acceleration * Time.deltaTime;
-        velocity = Vector3.ClampMagnitude(velocity, conf.maxV); //makes sure the boids don't go to fast
+        velocity = Vector3.ClampMagnitude(velocity, conf.maxVelocity); //makes sure the boids don't go to fast
 
         position = position + velocity * Time.deltaTime;
 
@@ -36,7 +36,26 @@ public class Agent : MonoBehaviour {
 
     Vector3 cohesion()
     {
-        return Vector3.zero;
+        Vector3 resultVecCohesion = new Vector3();
+
+        var boidFriends = world.getBoidFriends(this, conf.RadiusCohesion);
+
+        if (boidFriends.Count == 0)
+        { //Check to see if there any boids near a particular (this) boid.
+            return resultVecCohesion;
+        }
+
+        foreach( var agent in boidFriends)
+        {
+            resultVecCohesion = resultVecCohesion + agent.position;
+        }
+        resultVecCohesion = resultVecCohesion / boidFriends.Count;
+
+        resultVecCohesion = resultVecCohesion - this.position;
+
+        Vector3.Normalize(resultVecCohesion);
+
+        return resultVecCohesion;
     }
 
     Vector3 separation()

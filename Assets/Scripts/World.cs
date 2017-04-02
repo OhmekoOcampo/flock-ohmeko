@@ -37,6 +37,19 @@ public class World : MonoBehaviour
 
     public List<Agent> getBoidFriends(Agent agent, float radius)
     {
-        return null;
+        List<Agent> r = new List<Agent>();
+        
+        foreach(var otherAgent in agents)
+        {
+            if(otherAgent == agent) //No one is a neighbor of itself.
+            {
+                continue;
+            }
+            if(Vector3.Distance(agent.position,otherAgent.position) <= radius)
+            {
+                r.Add(otherAgent);
+            }
+        }
+        return r;
     }
 }
