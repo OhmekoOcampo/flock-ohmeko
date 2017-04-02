@@ -23,7 +23,7 @@ public class Agent : MonoBehaviour {
 	void Update () { //Will update the movement of the boids.
 
         //Newtonian Physics. Integration.
-        acceleration = cohesion();
+        acceleration = 10 * separation();
         acceleration = Vector3.ClampMagnitude(acceleration, conf.maxAcceleration); //makes sure the boids don't accelerate to fast
 
         velocity = velocity + acceleration * Time.deltaTime;
@@ -45,22 +45,43 @@ public class Agent : MonoBehaviour {
             return resultVecCohesion;
         }
 
-        foreach( var agent in boidFriends)
-        {
+        foreach( var agent in boidFriends) 
+        { //If there are neighbors find resulting vector for Cohesion
             resultVecCohesion = resultVecCohesion + agent.position;
         }
         resultVecCohesion = resultVecCohesion / boidFriends.Count;
 
-        resultVecCohesion = resultVecCohesion - this.position;
+        resultVecCohesion = resultVecCohesion - this.position; //Calculate new vector for (this) boid
 
-        Vector3.Normalize(resultVecCohesion);
+        Vector3.Normalize(resultVecCohesion); //After normalizing the resulting cohesion vector.
 
         return resultVecCohesion;
     }
 
     Vector3 separation()
     {
-        return Vector3.zero;
+        Vector3 resultVecSeparation = new Vector3();
+
+        var boidFriends = world.getBoidFriends(this, conf.RadiusSeperation);
+
+        if(boidFriends.Count == 0)
+        {
+            return resultVecSeparation;
+        }
+
+        foreach(var agent in boidFriends)
+        {
+            //Compute the vector that gives a force from each of (this) boid's friend.
+            Vector3 forceOnThisBoid = this.position - agent.position;
+            
+            if(forceOnThisBoid.magnitude > 0)
+            {
+                resultVecSeparation = resultVecSeparation + forceOnThisBoid.normalized / forceOnThisBoid.magnitude;
+            }
+        }
+
+        return resultVecSeparation.normalized;
+
     }
 
     Vector3 alignment()
