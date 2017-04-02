@@ -17,13 +17,15 @@ public class Agent : MonoBehaviour {
         world = FindObjectOfType<World>();
         conf = FindObjectOfType<AgentConfig>();
         position = transform.position;
+        velocity = new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3));
+
 	}
 	
 	// Update is called once per frame
 	void Update () { //Will update the movement of the boids.
 
         //Newtonian Physics. Integration.
-        acceleration = 10 * separation();
+        acceleration = 10 * alignment();
         acceleration = Vector3.ClampMagnitude(acceleration, conf.maxAcceleration); //makes sure the boids don't accelerate to fast
 
         velocity = velocity + acceleration * Time.deltaTime;
@@ -100,7 +102,7 @@ public class Agent : MonoBehaviour {
         {
             resultVecAlignment = resultVecAlignment + agent.velocity;
         }
-        return velocity.normalized;
+        return resultVecAlignment.normalized;
     }
 
     Vector3 combine()
