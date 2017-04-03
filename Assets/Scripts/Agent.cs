@@ -57,7 +57,7 @@ public class Agent : MonoBehaviour {
 
         resultVecCohesion = resultVecCohesion - this.position; //Calculate new vector for (this) boid
 
-        Vector3.Normalize(resultVecCohesion); //After normalizing the resulting cohesion vector.
+        resultVecCohesion = Vector3.Normalize(resultVecCohesion); //After normalizing the resulting cohesion vector.
 
         return resultVecCohesion;
     }
