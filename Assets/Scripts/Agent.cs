@@ -38,22 +38,36 @@ public class Agent : MonoBehaviour {
         transform.position = position;
 	}
 
+    bool cubeBoidsEyeSight(Vector3 someOtherBoidAgent)
+    {//Checks to see if the object our AI sees is within its' field of view.
+        return Vector3.Angle(this.velocity, someOtherBoidAgent - this.position) <= conf.VisionArea;
+    }
+
     Vector3 cohesion()
     {
         Vector3 resultVecCohesion = new Vector3();
-
+        int countBoidAgents = 0;
         var boidFriends = world.getBoidFriends(this, conf.RadiusCohesion);
-
+        
         if (boidFriends.Count == 0)
         { //Check to see if there any boids near a particular (this) boid.
             return resultVecCohesion;
         }
 
         foreach( var agent in boidFriends) 
-        { //If there are neighbors find resulting vector for Cohesion
-            resultVecCohesion = resultVecCohesion + agent.position;
+        {
+            if (cubeBoidsEyeSight(agent.position))
+            {//If there are neighbors find resulting vector for Cohesion
+                resultVecCohesion = resultVecCohesion + agent.position;
+                countBoidAgents++;
+            }
         }
-        resultVecCohesion = resultVecCohesion / boidFriends.Count;
+
+        if(countBoidAgents == 0)
+        {
+            return resultVecCohesion;
+        }
+        resultVecCohesion = resultVecCohesion / countBoidAgents;
 
         resultVecCohesion = resultVecCohesion - this.position; //Calculate new vector for (this) boid
 
@@ -75,12 +89,15 @@ public class Agent : MonoBehaviour {
 
         foreach(var agent in boidFriends)
         {
-            //Compute the vector that gives a force from each of (this) boid's friend.
-            Vector3 forceOnThisBoid = this.position - agent.position;
-            
-            if(forceOnThisBoid.magnitude > 0)
+            if (cubeBoidsEyeSight(agent.position))
             {
-                resultVecSeparation = resultVecSeparation + forceOnThisBoid.normalized / forceOnThisBoid.magnitude;
+                //Compute the vector that gives a force from each of (this) boid's friend.
+                Vector3 forceOnThisBoid = this.position - agent.position;
+
+                if (forceOnThisBoid.magnitude > 0)
+                {
+                    resultVecSeparation = resultVecSeparation + forceOnThisBoid.normalized / forceOnThisBoid.magnitude;
+                }
             }
         }
 
@@ -100,10 +117,14 @@ public class Agent : MonoBehaviour {
         }
 
         //(this) boid will mimic the speed and direction of it's boid friends.
-        foreach(var agent in boidFriends)
+        foreach (var agent in boidFriends)
         {
-            resultVecAlignment = resultVecAlignment + agent.velocity;
+            if (cubeBoidsEyeSight(agent.position))
+            {
+                resultVecAlignment = resultVecAlignment + agent.velocity;
+            }
         }
+        
         return resultVecAlignment.normalized;
     }
 
@@ -144,4 +165,5 @@ public class Agent : MonoBehaviour {
             boundaryVector.z = max;
         }
     }
+
 }

@@ -12,6 +12,7 @@ public class AgentConfig : MonoBehaviour
     public float WeightS;
     public float WeightA;
 
+    public float VisionArea = 100; //90 degree bird viewing angle
     public float maxVelocity; //maximum velocity
     public float maxAcceleration; //maximum acceleration
 }
