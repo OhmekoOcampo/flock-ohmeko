@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Agent.cs" />
     <Compile Include="Assets\Scripts\AgentConfig.cs" />
+    <Compile Include="Assets\Scripts\CreditScript.cs" />
     <Compile Include="Assets\Scripts\Leader.cs" />
     <Compile Include="Assets\Scripts\World.cs" />
   </ItemGroup>
