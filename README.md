@@ -1,8 +1,13 @@
 Project2-Boids!
+
 Due Date: 2 April 2017
+
 Class: CS 596 Advance 3D Game Programming
+
 Professor: Steve Price
+
 Student: Ohmeko Ocampo
+
 //////////////////////////////////////////////////////////////////////////////////
 
 This project was late because primarily I was working on my Electrical Engineering Lab during 
