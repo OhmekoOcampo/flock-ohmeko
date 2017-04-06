@@ -1,0 +1,45 @@
+Project1-MinecraftClone-OhmekoOcampo
+
+//////////////////////////////////////////////////////////////////////////////////
+
+STILL HAVE NOT UPLOADED FINISHED TDD AND GDD YET TO BLACKBOARD. WILL FINISH TODAY. :)
+VERSION CONTROL IS FUN WHEN YOU GET USE TO IT. HAHA.
+
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+Purpose: The purpose of this project is to demonstrate how PGC is done in Unity and 
+how Perlin Noise and pseudo-random numbers are use to achieve it. In order to illustrate this
+I have done a very simple Minecraft Clone just to illustrate this fact where having the player walk
+around and the environment grow and shrink procedurally from where he/she is on the game map.
+
+Due Date: 5 March 2017
+Class: CS 596 Advance 3D Game Programming
+Professor: Steve Price
+
+Note: The reason why I ended up mass adding commits is because I didn't have this project under 
+version control to begin with. Also this project is still in it's early stages. I'm still playing around
+with the PGC and it proved to be tougher than it looks so this Minecraft Clone project is still a work
+in progress. 
+
+Note about the complexity analysis: I placed my attempt in analyzing the codes complexity in my TDD word document.
+
+How this project is structured (What's in the darn folders?):
+Animations
+Audio
+Fonts
+Materials
+Models
+Pictures
+Scripts
+SimpleCumulus
+Standard Assets
+Textures
+Main Menu.unity
+Credits.unity
+World.unity
+
+Bugs:
+There is an issue with the one in Rijeka, please grade the one that is zipped up on blackboard. The joy stick controller does
+not show up for some reason on the pushed version. 
